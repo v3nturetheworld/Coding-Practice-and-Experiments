@@ -1,0 +1,8 @@
+#include "stack.h"
+
+
+stack *create_stack(int size)
+{ 
+    free(foo);
+}
+
