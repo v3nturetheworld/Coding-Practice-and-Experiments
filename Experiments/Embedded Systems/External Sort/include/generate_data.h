@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <vector>
 #include <limits>
+#include <typeinfo>
 #include <cstdlib>
 
 
@@ -18,8 +19,7 @@ public:
     {
         generate_data(number_of_items);
         const bool write_result = write_data_to_file();
-        const std::string res = (write_result) ? "SUCCESS" : "FAILURE";
-        std::cout << "GenerationObject Created. Write Result: " << res << '\n';
+        std::cout << "GenerationObject Created. Write Result: " << write_ret_code(write_result) << '\n';
     }
     GenerationObject()
     {
@@ -35,8 +35,24 @@ public:
     void regenerate_data(const std::size_t number_of_items)
     {
         generate_data(number_of_items);
+        const bool write_r = write_data_to_file();
+        std::cout << "[" << write_ret_code(write_r) << "]: Regenerated data containing " 
+            << number_of_items << " items written to " << file_name << '\n'; 
     }
 
+    void print_generated_data()
+    {
+        std::cout << "Data randomly generated for " << file_name << ":\n";
+        for (auto &v : data_to_write)
+            std::cout << v << "\n";
+        std::cout << std::endl;
+    }
+
+protected:
+    std::string write_ret_code(const bool &v)
+    {
+        return (v) ? "SUCCESS" : "FAILURE";
+    }
 private:
 
     void generate_data(const std::size_t number_of_items)
@@ -63,7 +79,6 @@ private:
             for(auto &elem : data_to_write)
             {
                 file_writer.write(reinterpret_cast<char *>(&elem), sizeof(elem));
-               // file_writer << elem << '\n';
             }
             file_writer.close();
             std::cout << "Done writing data to " << file_name << '\n';

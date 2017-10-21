@@ -20,7 +20,7 @@ if(test)
     enable_testing()
     include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-    set(test_SOURCES tests/test_external_sort.cpp)
+    set(test_SOURCES tests/test_external_sort.cpp tests/test_generate_data.cpp)
 
     add_executable(ExternalSort_UnitTests ${test_SOURCES})
     target_link_libraries(ExternalSort_UnitTests gtest gtest_main ExternalSortlib)
