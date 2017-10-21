@@ -35,7 +35,6 @@ protected:
 
         g1.set_file_name(f1_name);
         g1.regenerate_data(number_of_items);
-        g1.print_generated_data();
         
         g2.set_file_name(f2_name);
         g2.regenerate_data(number_of_items);
@@ -58,15 +57,31 @@ private:
 
 };
 
-TEST_F(GenerationTestClass, BasicGenerateTest)
+TEST_F(GenerationTestClass, BasicGenerateTest_UINT)
 {
     ReadDataObject<unsigned int> r("unsigned_int_test.bin");
     auto f_size = r.size();
-    EXPECT_NE(f_size, std::size_t(0));
-    r.print_file();
-    EXPECT_EQ(0,1);
+    ASSERT_NE(f_size, std::size_t(0));
+    EXPECT_EQ(f_size, std::size_t(30));
 }
 
+TEST_F(GenerationTestClass, BasicGenerateTest_INT)
+{
+    ReadDataObject<int> r("int_test.bin");
+    auto f_size = r.size();
+
+    ASSERT_NE(f_size, std::size_t(0));
+    EXPECT_EQ(f_size, std::size_t(30));
+}
+
+TEST_F(GenerationTestClass, BasicGenerateTest_UNSIGNED)
+{
+    ReadDataObject<int> r("unsigned_test.bin");
+    auto f_size = r.size();
+
+    ASSERT_NE(f_size, std::size_t(0));
+    EXPECT_EQ(f_size, std::size_t(30));
+}
 
 } //End of anonymous namespace
 

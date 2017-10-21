@@ -8,6 +8,9 @@ template <typename T>
 class ReadDataObject
 {
 public:
+
+    //TODO: Read data in Big-Endian format
+
     ReadDataObject()
         : file_size(0)
     {

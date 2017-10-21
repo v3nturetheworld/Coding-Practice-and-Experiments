@@ -12,7 +12,8 @@ template <typename T>
 class GenerationObject
 {
 public:
-    
+
+    //TODO: write in big-endian format
     GenerationObject(const std::size_t number_of_items, const std::string file_name)
         :
             file_name(file_name)
@@ -57,11 +58,13 @@ private:
 
     void generate_data(const std::size_t number_of_items)
     {
+        //May be bug prone if T is some weird type. Using static_assert to mitigate this as much as possible
+        static_assert(std::is_arithmetic<T>{}, "Datatype is not arithmetic type. RNG type must be numeric.");
+        
         std::cout << "[" << number_of_items * sizeof(T) << " Bytes Total]: Generating " << number_of_items << " of datatype " << typeid(T).name() << " which are " << sizeof(T) << " Bytes each.\n";
         data_to_write.clear();
         data_to_write.resize(number_of_items);
-
-        //May be bug prone if T is some weird type
+        
         std::generate(data_to_write.begin(), data_to_write.end(), []()
                 {
                     return std::rand() % std::numeric_limits<T>::max();
