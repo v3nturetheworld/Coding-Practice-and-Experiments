@@ -16,9 +16,19 @@ add_executable(ExternalSort src/main.cpp)
 target_link_libraries(ExternalSort ExternalSortlib)
 
 if(test)
-    add_subdirectory(lib/googletest/googletest)
+    find_package(GTest)
+    if(GTEST_FOUND)
+        include_directories(${GTEST_INCLUDE_DIRS})
+        message("Google Tests External Library found.")
+    else()
+        message("GTest library not found on system. Looking in lib/googletest/googletest.")
+        add_subdirectory(lib/googletest/googletest)
+        set(GTEST_ROOT ${gtest_SOURCE_DIR})
+        find_package(GTest REQUIRED)
+        include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    endif()
+
     enable_testing()
-    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
     set(test_SOURCES tests/test_external_sort.cpp tests/test_generate_data.cpp)
 

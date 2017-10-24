@@ -83,5 +83,18 @@ TEST_F(GenerationTestClass, BasicGenerateTest_UNSIGNED)
     EXPECT_EQ(f_size, std::size_t(30));
 }
 
+TEST_F(GenerationTestClass, ByteReader_Insanity_Test)
+{
+    ByteReader<unsigned int, 32> r("unsigned_int_test.bin");
+    r.read_all_data();
+    auto f_size = r.size();
+    ASSERT_NE(f_size, std::size_t(0));
+    EXPECT_EQ(f_size, std::size_t(30));
+
+
+}
+
+
+
 } //End of anonymous namespace
 
